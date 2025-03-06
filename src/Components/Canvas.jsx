@@ -448,10 +448,69 @@ const ballAndItsWallLimitsAndItsBounces = () =>
         parameters[0].fill();
     }
 
+    const drawBricks = () => 
+        {
+            // Use the global reference to the canvas
+            const canvas = canvasRef.current;
+            if (!canvas) 
+            {
+                console.error("Canvas not found.");
+                return;
+            }
+        
+            // Get the canvas context
+            const ctx = canvas.getContext('2d');
+            if (!ctx) 
+            {
+                console.error("Canvas context not available.");
+                return;
+            }
+        
+            // Brick dimensions
+            const brickWidth = 100; // Width of each brick
+            const brickHeight = 25; // Height of each brick
+            const gap = 1; // Gap between bricks (1px)
+        
+            // Calculate the total width of the brick group (3 bricks + 2 gaps)
+            const totalWidth = 6 * brickWidth + 4 * gap;
+        
+            // Calculate the starting X position to center the bricks horizontally
+            const startX = (canvas.width - totalWidth) / 2;
+        
+            // Starting Y position for the first brick
+            const startY = 25;
+        
+            // Draw 6 bricks in 2 rows of 3 bricks each
+            for (let row = 0; row < 4; row++) 
+            {
+                for (let col = 0; col < 6; col++) 
+                {
+                    // Calculate the position of the current brick
+                    const x = startX + col * (brickWidth + gap);
+                    const y = startY + row * (brickHeight + gap);
+        
+                    // Draw the brick rectangle
+                    ctx.beginPath();
+                    ctx.rect(x, y, brickWidth, brickHeight); // No rounded borders
+                    ctx.closePath();
+        
+                    // Create a linear gradient for the brick
+                    const gradient = ctx.createLinearGradient(x, y, x + brickWidth, y + brickHeight);
+                    gradient.addColorStop(0, '#8B4513'); // Initial color (brick red)
+                    gradient.addColorStop(1, '#A0522D'); // Final color (lighter brick red)
+        
+                    // Fill the rectangle with the gradient
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+                }
+            }
+        };
+
     useEffect(() =>
     {
         if(initialPosition)
         {
+            drawBricks();
             drawInitialPosition();
             drawSphereInitialPosition();
             setInitialPosition(false);
