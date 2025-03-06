@@ -489,19 +489,12 @@ const ballAndItsWallLimitsAndItsBounces = () =>
                 const x = startX + col * (brickWidth + gap);
                 const y = startY + row * (brickHeight + gap);
 
-                // Draw the brick rectangle
                 ctx.beginPath();
                 ctx.rect(x, y, brickWidth, brickHeight); // No rounded borders
+                ctx.fillStyle = '#A0522D'; // Color uniforme de ladrillo
+                ctx.fill();
                 ctx.closePath();
 
-                // Create a linear gradient for the brick
-                const gradient = ctx.createLinearGradient(x, y, x + brickWidth, y + brickHeight);
-                gradient.addColorStop(0, '#8B4513'); // Initial color (brick red)
-                gradient.addColorStop(1, '#A0522D'); // Final color (lighter brick red)
-
-                // Fill the rectangle with the gradient
-                ctx.fillStyle = gradient;
-                ctx.fill();
             }
         }
     };
