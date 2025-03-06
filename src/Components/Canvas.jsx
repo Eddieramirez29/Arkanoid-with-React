@@ -73,6 +73,7 @@ const Canvas = () =>
             ballAndItsWallLimitsAndItsBounces();
             eraseSphereOnMovement();
             sphereMovement();
+            detectBricksCollisions();
             //It detects when the sphere touches the pallet left-up
             if((yRef_sphere.current >= Y - 36 &&
                 xRef_sphere.current >= xRef.current &&
@@ -499,13 +500,28 @@ const ballAndItsWallLimitsAndItsBounces = () =>
         }
     };
 
-    
+    const detectBricksCollisions = () =>
+    {
+        // Use the global reference to the canvas
+        const canvas = canvasRef.current;
+        // Get the canvas context
+        const ctx = canvas.getContext('2d');
+
+        if(xRef_sphere.current >= 564.5 && xRef_sphere.current <= 664.5 && yRef_sphere.current <= 103)
+        {
+            ctx.beginPath();
+            ctx.clearRect(564.5, 103, 100, 25);
+            ctx.fill();
+            ctx.closePath();
+        }
+    }
 
     useEffect(() =>
     {
         if(initialPosition)
         {
             drawBricks();
+            detectBricksCollisions();
             drawInitialPosition();
             drawSphereInitialPosition();
             setInitialPosition(false);
